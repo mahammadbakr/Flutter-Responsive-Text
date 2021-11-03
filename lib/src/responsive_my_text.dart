@@ -1,6 +1,6 @@
 part of responsive_text;
 
-class ResponsiveMyText extends StatefulWidget {
+class ResponsiveText extends StatefulWidget {
   final Key? textKey;
   final TypeMultiplier? typeMultiplier;
   final String? data;
@@ -15,48 +15,42 @@ class ResponsiveMyText extends StatefulWidget {
   final TextDirection? textDirection;
   final Locale? locale;
   final bool? softWrap;
-  final bool wrapWords;
   final TextOverflow? overflow;
-  final double? textScaleFactor;
   final int? maxLines;
 
-  const ResponsiveMyText(
+  const ResponsiveText(
     String this.data, {
     Key? key,
     this.textKey,
     this.style,
     this.strutStyle,
     this.minFontSize = 10,
-    this.maxFontSize = double.infinity,
+    this.maxFontSize = 40,
     this.presetFontSizes,
     this.textAlign,
     this.textDirection,
     this.locale,
     this.softWrap,
-    this.wrapWords = true,
     this.overflow,
-    this.textScaleFactor,
     this.maxLines,
     this.typeMultiplier,
   })  : textSpan = null,
         super(key: key);
 
-  const ResponsiveMyText.rich(
+  const ResponsiveText.rich(
     TextSpan this.textSpan, {
     Key? key,
     this.textKey,
     this.style,
     this.strutStyle,
     this.minFontSize = 10,
-    this.maxFontSize = double.infinity,
+    this.maxFontSize = 40,
     this.presetFontSizes,
     this.textAlign,
     this.textDirection,
     this.locale,
     this.softWrap,
-    this.wrapWords = true,
     this.overflow,
-    this.textScaleFactor,
     this.maxLines,
     this.typeMultiplier,
   })  : data = null,
@@ -66,7 +60,7 @@ class ResponsiveMyText extends StatefulWidget {
   _AutoSizeTextState createState() => _AutoSizeTextState();
 }
 
-class _AutoSizeTextState extends State<ResponsiveMyText> {
+class _AutoSizeTextState extends State<ResponsiveText> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, size) {
@@ -77,7 +71,7 @@ class _AutoSizeTextState extends State<ResponsiveMyText> {
         style = defaultTextStyle.style.merge(widget.style);
       }
       if (style!.fontSize == null) {
-        style = style.copyWith(fontSize: ResponsiveMyText._defaultFontSize);
+        style = style.copyWith(fontSize: ResponsiveText._defaultFontSize);
       }
 
       final maxLines = widget.maxLines ?? defaultTextStyle.maxLines;

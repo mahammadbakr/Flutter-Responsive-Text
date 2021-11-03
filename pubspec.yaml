@@ -1,7 +1,7 @@
 name: responsive_text
 description: A new Flutter package to make your texts Responsive.
 version: 0.0.1
-homepage:
+homepage: https://github.com/mahammadbakr/Flutter-Responsive-Text
 
 environment:
   sdk: ">=2.15.0-268.0.dev <3.0.0"

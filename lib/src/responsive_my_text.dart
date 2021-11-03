@@ -10,7 +10,6 @@ class ResponsiveMyText extends StatefulWidget {
   final StrutStyle? strutStyle;
   final double minFontSize;
   final double maxFontSize;
-  final double stepGranularity;
   final List<double>? presetFontSizes;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -29,7 +28,6 @@ class ResponsiveMyText extends StatefulWidget {
     this.strutStyle,
     this.minFontSize = 10,
     this.maxFontSize = double.infinity,
-    this.stepGranularity = 1,
     this.presetFontSizes,
     this.textAlign,
     this.textDirection,
@@ -49,9 +47,8 @@ class ResponsiveMyText extends StatefulWidget {
     this.textKey,
     this.style,
     this.strutStyle,
-    this.minFontSize = 12,
+    this.minFontSize = 10,
     this.maxFontSize = double.infinity,
-    this.stepGranularity = 1,
     this.presetFontSizes,
     this.textAlign,
     this.textDirection,
@@ -87,10 +84,11 @@ class _AutoSizeTextState extends State<ResponsiveMyText> {
 
       _validateProperties(style, maxLines);
 
-      final result =
-          _calculateFontSize(size, style, maxLines, widget.typeMultiplier);
+      final result = _calculateFontSize(size, style, maxLines);
 
-      return _buildText(result, style, maxLines);
+      final TextStyle styleUpdated = _updateMyStyle(style);
+
+      return _buildText(result, styleUpdated, maxLines);
     });
   }
 
@@ -100,21 +98,11 @@ class _AutoSizeTextState extends State<ResponsiveMyText> {
     assert(widget.key == null || widget.key != widget.textKey,
         'Key and textKey must not be equal.');
     if (widget.presetFontSizes == null) {
-      assert(
-          widget.stepGranularity >= 0.1,
-          'StepGranularity must be greater than or equal to 0.1. It is not a '
-          'good idea to resize the font with a higher accuracy.');
       assert(widget.minFontSize >= 0,
           'MinFontSize must be greater than or equal to 0.');
       assert(widget.maxFontSize > 0, 'MaxFontSize has to be greater than 0.');
       assert(widget.minFontSize <= widget.maxFontSize,
           'MinFontSize must be smaller or equal than maxFontSize.');
-      assert(widget.minFontSize / widget.stepGranularity % 1 == 0,
-          'MinFontSize must be a multiple of stepGranularity.');
-      if (widget.maxFontSize != double.infinity) {
-        assert(widget.maxFontSize / widget.stepGranularity % 1 == 0,
-            'MaxFontSize must be a multiple of stepGranularity.');
-      }
     } else {
       assert(widget.presetFontSizes!.isNotEmpty,
           'PresetFontSizes must not be empty.');
@@ -123,11 +111,11 @@ class _AutoSizeTextState extends State<ResponsiveMyText> {
     }
   }
 
-  double _calculateFontSize(BoxConstraints size, TextStyle? style,
-      int? maxLines, TypeMultiplier? typeMultiplier) {
+  double _calculateFontSize(
+      BoxConstraints size, TextStyle? style, int? maxLines) {
     late double typeMultiplierSize = 0;
 
-    typeMultiplierSize = _calculateTypeMultiplierSize(size, typeMultiplier);
+    typeMultiplierSize = _calculateTypeMultiplierSize(size);
 
     late double screenWidth = 0;
     late double screenHeight = 0;
@@ -143,11 +131,10 @@ class _AutoSizeTextState extends State<ResponsiveMyText> {
     return _blockWidth + _blockHeight * typeMultiplierSize;
   }
 
-  double _calculateTypeMultiplierSize(
-      BoxConstraints size, TypeMultiplier? typeMultiplier) {
+  double _calculateTypeMultiplierSize(BoxConstraints size) {
     double heightBlock = size.maxHeight / 100;
     double widthBlock = size.maxWidth / 100;
-    switch (typeMultiplier) {
+    switch (widget.typeMultiplier) {
       case TypeMultiplier.headline1:
         return heightBlock * widthBlock * 4.0;
       case TypeMultiplier.headline2:
@@ -190,6 +177,53 @@ class _AutoSizeTextState extends State<ResponsiveMyText> {
         return heightBlock * widthBlock * 2.1;
       default:
         return heightBlock * widthBlock * 2.1;
+    }
+  }
+
+  TextStyle _updateMyStyle(TextStyle style) {
+    switch (widget.typeMultiplier) {
+      case TypeMultiplier.headline1:
+        return style.copyWith(fontWeight: FontWeight.w900);
+      case TypeMultiplier.headline2:
+        return style.copyWith(fontWeight: FontWeight.w800);
+      case TypeMultiplier.headline3:
+        return style.copyWith(fontWeight: FontWeight.w700);
+      case TypeMultiplier.headline4:
+        return style.copyWith(fontWeight: FontWeight.w700);
+      case TypeMultiplier.headline5:
+        return style.copyWith(fontWeight: FontWeight.w600);
+      case TypeMultiplier.headline6:
+        return style.copyWith(fontWeight: FontWeight.w600);
+      case TypeMultiplier.bodyText1:
+        return style.copyWith(fontWeight: FontWeight.w700);
+      case TypeMultiplier.bodyText2:
+        return style.copyWith(fontWeight: FontWeight.w600);
+      case TypeMultiplier.bodyText3:
+        return style.copyWith(fontWeight: FontWeight.w500);
+      case TypeMultiplier.bodyText4:
+        return style.copyWith(fontWeight: FontWeight.w500);
+      case TypeMultiplier.bodyText5:
+        return style.copyWith(fontWeight: FontWeight.w400);
+      case TypeMultiplier.bodyText6:
+        return style.copyWith(fontWeight: FontWeight.w400);
+      case TypeMultiplier.subtitle1:
+        return style.copyWith(fontWeight: FontWeight.w500);
+      case TypeMultiplier.subtitle2:
+        return style.copyWith(fontWeight: FontWeight.w500);
+      case TypeMultiplier.subtitle3:
+        return style.copyWith(fontWeight: FontWeight.w400);
+      case TypeMultiplier.subtitle4:
+        return style.copyWith(fontWeight: FontWeight.w300);
+      case TypeMultiplier.subtitle5:
+        return style.copyWith(fontWeight: FontWeight.w300);
+      case TypeMultiplier.subtitle6:
+        return style.copyWith(fontWeight: FontWeight.w200);
+      case TypeMultiplier.caption:
+        return style.copyWith(fontWeight: FontWeight.w100);
+      case TypeMultiplier.error:
+        return style.copyWith(fontWeight: FontWeight.w400);
+      default:
+        return style.copyWith(fontWeight: FontWeight.w500);
     }
   }
 

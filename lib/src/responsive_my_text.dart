@@ -2,7 +2,7 @@ part of responsive_text;
 
 class FlutterResponsiveText extends StatefulWidget {
   final Key? textKey;
-  final TextType? typeMultiplier;
+  final TextType? textType;
   final String? data;
   final TextSpan? textSpan;
   final TextStyle? style;
@@ -33,7 +33,7 @@ class FlutterResponsiveText extends StatefulWidget {
     this.softWrap,
     this.overflow,
     this.maxLines,
-    this.typeMultiplier,
+    this.textType,
   })  : textSpan = null,
         super(key: key);
 
@@ -52,7 +52,7 @@ class FlutterResponsiveText extends StatefulWidget {
     this.softWrap,
     this.overflow,
     this.maxLines,
-    this.typeMultiplier,
+    this.textType,
   })  : data = null,
         super(key: key);
 
@@ -101,7 +101,7 @@ class _AutoSizeTextState extends State<FlutterResponsiveText> {
       assert(widget.presetFontSizes!.isNotEmpty,
           'PresetFontSizes must not be empty.');
       assert(
-          widget.typeMultiplier == null, 'typeMultiplier must not be empty.');
+          widget.textType == null, 'typeMultiplier must not be empty.');
     }
   }
 
@@ -128,7 +128,7 @@ class _AutoSizeTextState extends State<FlutterResponsiveText> {
   double _calculateTypeMultiplierSize(BoxConstraints size) {
     double heightBlock = size.maxHeight / 100;
     double widthBlock = size.maxWidth / 100;
-    switch (widget.typeMultiplier) {
+    switch (widget.textType) {
       case TextType.headline1:
         return heightBlock * widthBlock * 4.0;
       case TextType.headline2:
@@ -175,7 +175,7 @@ class _AutoSizeTextState extends State<FlutterResponsiveText> {
   }
 
   TextStyle _updateMyStyle(TextStyle style) {
-    switch (widget.typeMultiplier) {
+    switch (widget.textType) {
       case TextType.headline1:
         return style.copyWith(fontWeight: FontWeight.w900);
       case TextType.headline2:

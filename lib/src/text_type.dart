@@ -1,6 +1,6 @@
 part of responsive_text;
 
-enum TypeMultiplier {
+enum TextType {
   headline1,
   headline2,
   headline3,
@@ -22,5 +22,3 @@ enum TypeMultiplier {
   caption,
   error,
 }
-
-

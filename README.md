@@ -1,39 +1,44 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+# Flutter Responsive Text
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A new Flutter package to make your texts Responsive.
+  The Package will Assist you to calculate size of texts and wieghts.
+  Specify which Type of Texts you want to show such as [ headline, bodytext,
+  subtitle text or caption text] so that is all...
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+  - Determine the Size of text depends on the screen height + width.
+  - Specify the Weight of texts depend on the Text Type.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+  Run one of these Commands to install
+  ```dart
+    dart pub add responsive_text
+  ```
+  ```dart
+    flutter pub add responsive_text
+  ```
+  or add this line in pubspec.yaml
+  ```dart
+    responsive_text: ^version
+  ```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+  - Import the Package where you want to use it
+  ```dart
+    import 'package:responsive_text/responsive_text.dart';
+  ```
 
-```dart
-const like = 'sample';
-```
+  - Use the Widget jus like simple Text Widget plus one new field
+    named 'TextType'
+  ```dart
+    const ResponsiveMyText(
+                  'Please Enter some text !',
+                  textType: TextType.bodyText1,
+                  style: TextStyle(color: Colors.black),
+                ),
+  ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
